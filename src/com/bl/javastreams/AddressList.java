@@ -114,6 +114,34 @@ public class AddressList {
         }
     }
 
+    public void CountByCityOrState(String cityOrState, int CityOrStateFlag){
+
+        int countPerson = 0;
+
+        if(CityOrStateFlag == 0)
+        {
+            for(Map.Entry<String, AddressBookMain> entry : AddressListMap.entrySet())
+            {
+                AddressBookMain addBook = entry.getValue();
+                Integer count = (int) addBook.CityPersonMap.entrySet().stream().filter(findCity -> findCity.getKey().equals(cityOrState)).map(Map.Entry::getValue).findFirst().orElse(null).size();
+               countPerson+=count;
+            }
+            System.out.println("Total number of people in this city: "+countPerson);
+        }
+        else if(CityOrStateFlag == 1)
+        {
+            for(Map.Entry<String, AddressBookMain> entry : AddressListMap.entrySet())
+            {
+                AddressBookMain addBook = entry.getValue();
+                Integer count = (int) addBook.StatePersonMap.entrySet().stream().filter(findState -> findState.getKey().equals(cityOrState)).map(Map.Entry::getValue).findFirst().orElse(null).size();
+                countPerson+=count;
+            }
+            System.out.println("Total number of people in this state: "+countPerson);
+        }
+
+
+    }
+
     public static void main(String[] args) {
 
         System.out.println("Welcome to Address Book Program in AddressList class on Master Branch \n");
@@ -122,7 +150,7 @@ public class AddressList {
         boolean flag2 = true;
         while(flag2)
         {
-            System.out.println("Enter 1 to Add New AddressBook to AddressList\nEnter 2 to Search Person By City Or State\nEnter 3 to Search Person By City Or State HashMap");
+            System.out.println("Enter 1 to Add New AddressBook to AddressList\nEnter 2 to Search Person By City Or State\nEnter 3 to Search Person By City Or State HashMap\nEnter 4 to Count Contacts By City Or State");
             Scanner sc7=new Scanner(System.in);
             int choice=sc7.nextInt();
             switch(choice)
@@ -175,6 +203,24 @@ public class AddressList {
                         String state= sc11.nextLine();
                         System.out.println("Search Results:- \n");
                         AddList.SearchPersonByCityOrStateHashmap(state, cityOrStateFlag1);
+                    }
+                    break;
+
+                case 4:
+                    System.out.println("Enter 0 To Choose City / 1 To Choose State : ");
+                    Scanner sc12= new Scanner(System.in);
+                    int cityOrStateFlag2= sc12.nextInt();
+                    if(cityOrStateFlag2 ==0) {
+                        System.out.println("Enter City For Which You Want To Count : ");
+                        Scanner sc13= new Scanner(System.in);
+                        String city= sc13.nextLine();
+                        AddList.CountByCityOrState(city, cityOrStateFlag2);
+                    }
+                    if(cityOrStateFlag2 ==1) {
+                        System.out.println("Enter State For Which You Want To Count : ");
+                        Scanner sc13= new Scanner(System.in);
+                        String state= sc13.nextLine();
+                        AddList.CountByCityOrState(state, cityOrStateFlag2);
                     }
                     break;
 
