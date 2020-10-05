@@ -22,17 +22,13 @@ public class Contact {
         this.email = email;
     }
 
-    public Contact()
-    {
+    public Contact() {
 
     }
 
-    public String getFirstname()
-    {
+    public String getFirstname() {
         return firstname;
     }
-
-
 
     public static void main(String[] args) {
         System.out.println("Welcome to Address book");

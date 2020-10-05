@@ -6,19 +6,20 @@ import java.util.stream.Collectors;
 public class AddressBookMain {
 
     public static ArrayList<Contact> persons;
+    public HashMap<String, ArrayList<Contact>> StatePersonMap;
+    public HashMap<String, ArrayList<Contact>> CityPersonMap;
 
 
     Scanner sc = new Scanner(System.in);
     Scanner sc1 = new Scanner(System.in);
     Scanner sc2 = new Scanner(System.in);
 
-
-
     public AddressBookMain(){
 
         persons = new ArrayList<Contact>();
+        StatePersonMap = new HashMap<String,ArrayList<Contact>>();
+        CityPersonMap = new HashMap<String,ArrayList<Contact>>();
     }
-
 
     public static Contact SearchByFirstName(String firstname){
 
@@ -68,6 +69,19 @@ public class AddressBookMain {
         email=sc.nextLine();
         Contact c= new Contact(firstname, lastname, address, city, state, zip, number, email);
         persons.add(c);
+
+        System.out.println("State"+state);
+
+        if(!StatePersonMap.containsKey(state))
+            StatePersonMap.put(state, new ArrayList<Contact>());
+        StatePersonMap.get(state).add(c);
+
+        if(!CityPersonMap.containsKey(city))
+            CityPersonMap.put(city, new ArrayList<Contact>());
+        CityPersonMap.get(city).add(c);
+
+
+
         System.out.println("Contact Successfully Added!!!\n\nContactList Contains\n");
 
         for (int i = 0; i < persons.size(); i++){

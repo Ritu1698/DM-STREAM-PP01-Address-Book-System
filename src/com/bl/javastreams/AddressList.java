@@ -59,7 +59,6 @@ public class AddressList {
         }
     }
 
-
     public void SearchPersonByCityOrState(String location, int CityOrStateFlag) {
 
         if(CityOrStateFlag ==0) {                   //SearchByCity
@@ -88,6 +87,33 @@ public class AddressList {
         }
     }
 
+    public void SearchPersonByCityOrStateHashmap(String location, int StateOrCityFlag){
+
+        if(StateOrCityFlag ==0) {
+            for(Map.Entry<String, AddressBookMain> entry : AddressListMap.entrySet())
+            {
+                AddressBookMain addBook = entry.getValue();
+                ArrayList<Contact> contacts = addBook.CityPersonMap.entrySet().stream().filter(findCity -> findCity.getKey().equals(location)).map(Map.Entry::getValue).findFirst().orElse(null);
+                for(Contact contact:contacts)
+                {
+                    System.out.println(contact.firstname+" "+contact.lastname+" "+contact.address+" "+contact.city+" "+contact.email+" "+contact.number+" "+contact.state+" "+contact.zip+"\n");
+                }
+            }
+
+        }
+        else if(StateOrCityFlag ==1) {
+            for(Map.Entry<String, AddressBookMain> entry : AddressListMap.entrySet())
+            {
+                AddressBookMain addBook = entry.getValue();
+                ArrayList<Contact> contacts = addBook.StatePersonMap.entrySet().stream().filter(findState -> findState.getKey().equals(location)).map(Map.Entry::getValue).findFirst().orElse(null);
+                for(Contact contact:contacts)
+                {
+                    System.out.println(contact.firstname+" "+contact.lastname+" "+contact.address+" "+contact.city+" "+contact.email+" "+contact.number+" "+contact.state+" "+contact.zip+"\n");
+                }
+            }
+        }
+    }
+
     public static void main(String[] args) {
 
         System.out.println("Welcome to Address Book Program in AddressList class on Master Branch \n");
@@ -96,7 +122,7 @@ public class AddressList {
         boolean flag2 = true;
         while(flag2)
         {
-            System.out.println("Enter 1 to Add New AddressBook to AddressList\nEnter 2 to Search Person By City Or State");
+            System.out.println("Enter 1 to Add New AddressBook to AddressList\nEnter 2 to Search Person By City Or State\nEnter 3 to Search Person By City Or State HashMap");
             Scanner sc7=new Scanner(System.in);
             int choice=sc7.nextInt();
             switch(choice)
@@ -129,6 +155,26 @@ public class AddressList {
                         Scanner sc9= new Scanner(System.in);
                         String state= sc9.nextLine();
                         AddList.SearchPersonByCityOrState(state, cityOrStateFlag);
+                    }
+                    break;
+
+                case 3:
+                    System.out.println("Enter 0 To Choose City / 1 To Choose State : ");
+                    Scanner sc10= new Scanner(System.in);
+                    int cityOrStateFlag1= sc10.nextInt();
+                    if(cityOrStateFlag1 ==0) {
+                        System.out.println("Enter City For Which You Want To Search Contact : ");
+                        Scanner sc11= new Scanner(System.in);
+                        String city= sc11.nextLine();
+                        System.out.println("Search Results:- \n");
+                        AddList.SearchPersonByCityOrStateHashmap(city, cityOrStateFlag1);
+                    }
+                    if(cityOrStateFlag1 ==1) {
+                        System.out.println("Enter State For Which You Want To Search Contact : ");
+                        Scanner sc11= new Scanner(System.in);
+                        String state= sc11.nextLine();
+                        System.out.println("Search Results:- \n");
+                        AddList.SearchPersonByCityOrStateHashmap(state, cityOrStateFlag1);
                     }
                     break;
 
