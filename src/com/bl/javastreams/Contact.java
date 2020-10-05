@@ -27,6 +27,12 @@ public class Contact {
 
     }
 
+    public String getFirstname()
+    {
+        return firstname;
+    }
+
+
 
     public static void main(String[] args) {
         System.out.println("Welcome to Address book");

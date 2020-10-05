@@ -1,6 +1,7 @@
 package com.bl.javastreams;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class AddressBookMain {
 
@@ -42,6 +43,15 @@ public class AddressBookMain {
         System.out.println("Enter your details:\n");
         System.out.println("Firstname\n");
         firstname=sc.nextLine();
+
+        List<String> names = persons.stream().map(Contact::getFirstname).collect(Collectors.toList());
+        boolean checkDuplicateName = names.stream().anyMatch(str -> firstname.equals(str));
+        if(checkDuplicateName == true)
+        {
+            System.out.println("This Name is already present in this given AddressBook!!!!\n");
+            return;
+        }
+
         System.out.println("Lastname\n");
         lastname=sc.nextLine();
         System.out.println("Address\n");
@@ -58,7 +68,7 @@ public class AddressBookMain {
         email=sc.nextLine();
         Contact c= new Contact(firstname, lastname, address, city, state, zip, number, email);
         persons.add(c);
-        System.out.println("Contact Succesfully Added!!!\n\nContactList Contains\n");
+        System.out.println("Contact Successfully Added!!!\n\nContactList Contains\n");
 
         for (int i = 0; i < persons.size(); i++){
             System.out.println(i+1+". Firstname "+persons.get(i).firstname+" Lastname "+persons.get(i).lastname+
