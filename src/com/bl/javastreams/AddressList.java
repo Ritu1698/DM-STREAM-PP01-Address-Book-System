@@ -142,6 +142,19 @@ public class AddressList {
 
     }
 
+    public void sortPersonDetailsByName() {
+
+        for(Map.Entry<String, AddressBookMain> entry : AddressListMap.entrySet())
+        {
+            AddressBookMain addBook = entry.getValue();
+            List<Contact> sortedList = addBook.persons.stream().sorted(Comparator.comparing(Contact::getFirstname)).collect(Collectors.toList());
+            for(Contact contact:sortedList)
+            {
+                System.out.println(contact.firstname+" "+contact.lastname+" "+contact.address+" "+contact.city+" "+contact.email+" "+contact.number+" "+contact.state+" "+contact.zip+"\n");
+            }
+        }
+    }
+
     public static void main(String[] args) {
 
         System.out.println("Welcome to Address Book Program in AddressList class on Master Branch \n");
@@ -150,7 +163,7 @@ public class AddressList {
         boolean flag2 = true;
         while(flag2)
         {
-            System.out.println("Enter 1 to Add New AddressBook to AddressList\nEnter 2 to Search Person By City Or State\nEnter 3 to Search Person By City Or State HashMap\nEnter 4 to Count Contacts By City Or State");
+            System.out.println("Enter 1 to Add New AddressBook to AddressList\nEnter 2 to Search Person By City Or State\nEnter 3 to Search Person By City Or State HashMap\nEnter 4 to Count Contacts By City Or State\nEnter 5 to Sort Persons By Firstname");
             Scanner sc7=new Scanner(System.in);
             int choice=sc7.nextInt();
             switch(choice)
@@ -223,6 +236,9 @@ public class AddressList {
                         AddList.CountByCityOrState(state, cityOrStateFlag2);
                     }
                     break;
+
+                case 5:
+                    AddList.sortPersonDetailsByName();
 
                 default:
                     sc7.close();
