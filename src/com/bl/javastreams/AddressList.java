@@ -155,6 +155,39 @@ public class AddressList {
         }
     }
 
+    public void sortPersonDetailsByCityOrStateOrZip(int CityOrZipOrStateFlag){
+
+        if(CityOrZipOrStateFlag ==0){
+
+            for(Map.Entry<String, AddressBookMain> entry : AddressListMap.entrySet()) {
+                AddressBookMain addBook = entry.getValue();
+                List<Contact> sortedList = addBook.persons.stream().sorted(Comparator.comparing(Contact::getCity)).collect(Collectors.toList());
+                for(Contact contact:sortedList) {
+                    System.out.println(contact.city+" "+contact.firstname+" "+contact.lastname+" "+contact.address+" "+contact.email+" "+contact.number+" "+contact.state+" "+contact.zip+"\n");
+                }
+            }
+        }
+        else if (CityOrZipOrStateFlag == 1){
+            for(Map.Entry<String, AddressBookMain> entry : AddressListMap.entrySet()) {
+                AddressBookMain addBook = entry.getValue();
+                List<Contact> sortedList = addBook.persons.stream().sorted(Comparator.comparing(Contact::getState)).collect(Collectors.toList());
+                for(Contact contact:sortedList) {
+                    System.out.println(contact.state+" "+contact.firstname+" "+contact.lastname+" "+contact.address+" "+contact.email+" "+contact.number+" "+contact.city+" "+contact.zip+"\n");
+                }
+            }
+        }
+
+        else if (CityOrZipOrStateFlag == 2){
+            for(Map.Entry<String, AddressBookMain> entry : AddressListMap.entrySet()) {
+                AddressBookMain addBook = entry.getValue();
+                List<Contact> sortedList = addBook.persons.stream().sorted(Comparator.comparing(Contact::getZip)).collect(Collectors.toList());
+                for(Contact contact:sortedList) {
+                    System.out.println(contact.zip+" "+contact.firstname+" "+contact.lastname+" "+contact.address+" "+contact.email+" "+contact.number+" "+contact.city+" "+contact.state+"\n");
+                }
+            }
+        }
+    }
+
     public static void main(String[] args) {
 
         System.out.println("Welcome to Address Book Program in AddressList class on Master Branch \n");
@@ -163,7 +196,7 @@ public class AddressList {
         boolean flag2 = true;
         while(flag2)
         {
-            System.out.println("Enter 1 to Add New AddressBook to AddressList\nEnter 2 to Search Person By City Or State\nEnter 3 to Search Person By City Or State HashMap\nEnter 4 to Count Contacts By City Or State\nEnter 5 to Sort Persons By Firstname");
+            System.out.println("Enter 1 to Add New AddressBook to AddressList\nEnter 2 to Search Person By City Or State\nEnter 3 to Search Person By City Or State HashMap\nEnter 4 to Count Contacts By City Or State\nEnter 5 to Sort Persons By Firstname\nEnter 6 to Sort Persons By City, State Or Zip");
             Scanner sc7=new Scanner(System.in);
             int choice=sc7.nextInt();
             switch(choice)
@@ -239,6 +272,15 @@ public class AddressList {
 
                 case 5:
                     AddList.sortPersonDetailsByName();
+                    break;
+
+                case 6:
+                    System.out.println("Enter 0 To Choose City / 1 To Choose State / 2 To Choose Zip : ");
+                    Scanner sc14= new Scanner(System.in);
+                    int cityZipStateFlag= sc14.nextInt();
+                    AddList.sortPersonDetailsByCityOrStateOrZip(cityZipStateFlag);
+                    break;
+
 
                 default:
                     sc7.close();

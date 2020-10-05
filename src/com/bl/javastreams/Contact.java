@@ -30,6 +30,19 @@ public class Contact {
         return firstname;
     }
 
+    public String getCity() {
+        return city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public String getZip() {
+        return zip;
+    }
+
+
     public static void main(String[] args) {
         System.out.println("Welcome to Address book");
     }
