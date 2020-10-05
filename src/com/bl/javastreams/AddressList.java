@@ -1,6 +1,7 @@
 package com.bl.javastreams;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class AddressList {
 
@@ -59,8 +60,35 @@ public class AddressList {
     }
 
 
-    public static void main(String[] args)
-    {
+    public void SearchPersonByCityOrState(String location, int CityOrStateFlag) {
+
+        if(CityOrStateFlag ==0) {                   //SearchByCity
+            for(Map.Entry<String, AddressBookMain> entry: AddressListMap.entrySet())
+            {
+
+                AddressBookMain addBook = entry.getValue();
+                List<Contact> contactsList = addBook.persons.stream().filter(findCity -> findCity.city.equals(location)).collect(Collectors.toList());
+                for(Contact contact:contactsList)
+                {
+                    System.out.println(contact.firstname+" "+contact.lastname+" "+contact.address+" "+contact.city+" "+contact.email+" "+contact.number+" "+contact.state+" "+contact.zip+"\n");
+                }
+            }
+        }
+
+        else if(CityOrStateFlag == 1) {
+            for(Map.Entry<String, AddressBookMain> entry: AddressListMap.entrySet())
+            {
+                AddressBookMain addBook = entry.getValue();
+                List<Contact> contactsList = addBook.persons.stream().filter(findState -> findState.state.equals(location)).collect(Collectors.toList());
+                for(Contact contact:contactsList)
+                {
+                    System.out.println(contact.firstname+" "+contact.lastname+" "+contact.address+" "+contact.city+" "+contact.email+" "+contact.number+" "+contact.state+" "+contact.zip+"\n");
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
 
         System.out.println("Welcome to Address Book Program in AddressList class on Master Branch \n");
         AddressList AddList= new AddressList();
@@ -68,7 +96,7 @@ public class AddressList {
         boolean flag2 = true;
         while(flag2)
         {
-            System.out.println("Press 1 to Add New AddressBook to AddressList");
+            System.out.println("Enter 1 to Add New AddressBook to AddressList\nEnter 2 to Search Person By City Or State");
             Scanner sc7=new Scanner(System.in);
             int choice=sc7.nextInt();
             switch(choice)
@@ -85,6 +113,23 @@ public class AddressList {
                     }
 
                     AddList.AddAddressBookByName(AddBookName);
+                    break;
+                case 2:
+                    System.out.println("Enter 0 To Choose City / 1 To Choose State : ");
+                    Scanner sc8= new Scanner(System.in);
+                    int cityOrStateFlag= sc8.nextInt();
+                    if(cityOrStateFlag ==0) {
+                        System.out.println("Enter City For Which You Want To Search Contact : ");
+                        Scanner sc9= new Scanner(System.in);
+                        String city= sc9.nextLine();
+                        AddList.SearchPersonByCityOrState(city, cityOrStateFlag);
+                    }
+                    if(cityOrStateFlag ==1) {
+                        System.out.println("Enter State For Which You Want To Search Contact : ");
+                        Scanner sc9= new Scanner(System.in);
+                        String state= sc9.nextLine();
+                        AddList.SearchPersonByCityOrState(state, cityOrStateFlag);
+                    }
                     break;
 
                 default:
