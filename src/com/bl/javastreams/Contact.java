@@ -10,6 +10,7 @@ public class Contact {
     public String zip;
     public String number;
     public String email;
+
     public Contact(String firstname, String lastname, String address, String city, String state, String zip, String number,
                    String email) {
         this.firstname = firstname;
@@ -42,13 +43,23 @@ public class Contact {
         return zip;
     }
 
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", address='" + address + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", zip='" + zip + '\'' +
+                ", number='" + number + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 
     public static void main(String[] args) {
         System.out.println("Welcome to Address book");
     }
-
-
-
 
 
 }
